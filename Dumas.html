@@ -661,15 +661,12 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
 	console.log(user);
 	pP12 = '370212450357';
 	queryp = "SELECT Parcel12  FROM " + FT_TableID + " WHERE Parcel12 = '"+ pP12 +"'";
-	query = 'https://www.googleapis.com/fusiontables/v2/tables/'+ FT_TableID
+	query = 'https://www.googleapis.com/fusiontables/v2/query'
 
         $.post(query,
         {
-		Authorization: token,
-	Content-Type: "application/octet-stream",
-		11,
-		12
-        
+		sql: queryp
+
         },
         function(data,status){
             alert("Data: " + data + "\nStatus: " + status);

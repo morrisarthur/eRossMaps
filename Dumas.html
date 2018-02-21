@@ -653,12 +653,12 @@ alert('Here')
   firebase.initializeApp(config);
   var provider = new firebase.auth.GoogleAuthProvider();
 	alert('Here2')
-//firebase.auth().signInWithRedirect(provider);
- //alert('Here3')
+firebase.auth().signInWithRedirect(provider);
+alert('Here3')
 
 firebase.auth().getRedirectResult().then(function(result) {
 	alert('Here4');
-	alert(result.credential);
+	console.log(result.credential);
  if (result.credential) {
     // This gives you a Google Access Token. You can use it to access the Google API.
     var token = result.credential.accessToken;

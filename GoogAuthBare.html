@@ -23,7 +23,7 @@
   // Make sure the client is loaded and sign-in is complete before calling this method.
   function execute() {
     return gapi.client.fusiontables.query.sql({
-      "sql": "SELECT Parcel12  FROM 1wUquUQoL6PgAbqysRWwCPYf6_tWD9NtEWYJ1KD-e WHERE Parcel12 = '370212450357'"
+      "sql": "Insert Into 1LU88bmDYYYzRUHzLTAKK4jjLJo8SLvJKPy55yA-q (siteid) VALUES (111)"
     })
         .then(function(response) {
                 // Handle the results here (response.result has the parsed body).

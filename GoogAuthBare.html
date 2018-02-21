@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<title>Bare </title>
+
+</head>
+
+<body>
+<script src="https://apis.google.com/js/api.js"></script>
+<script>
+  function authenticate() {
+    return gapi.auth2.getAuthInstance()
+        .signIn({scope: "https://www.googleapis.com/auth/fusiontables https://www.googleapis.com/auth/fusiontables.readonly"})
+        .then(function() { console.log("Sign-in successful"); },
+              function(err) { console.error("Error signing in", err); });
+  }
+  function loadClient() {
+    return gapi.client.load("https://content.googleapis.com/discovery/v1/apis/fusiontables/v2/rest")
+        .then(function() { console.log("GAPI client loaded for API"); },
+              function(err) { console.error("Error loading GAPI client for API", err); });
+  }
+  // Make sure the client is loaded and sign-in is complete before calling this method.
+  function execute() {
+    return gapi.client.fusiontables.query.sql({
+      "sql": "SELECT Parcel12  FROM 1wUquUQoL6PgAbqysRWwCPYf6_tWD9NtEWYJ1KD-e WHERE Parcel12 = '370212450357'"
+    })
+        .then(function(response) {
+                // Handle the results here (response.result has the parsed body).
+                console.log("Response", response);
+              },
+              function(err) { console.error("Execute error", err); });
+  }
+  gapi.load("client:auth2", function() {
+var  clientid = '13872833309-o9hbt87a1ecdhniq8hmtblpllv34bsib.apps.googleusercontent.com'
+    gapi.auth2.init({client_id: clientid});
+  });
+</script>
+<button onclick="authenticate().then(loadClient)">authorize and load</button>
+<button onclick="execute()">execute</button>
+
+
+</body>
+</html>

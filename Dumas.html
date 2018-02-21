@@ -66,7 +66,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDy0O2hjT2-qZe2klgq_wa3Pm6PLFhZMbM&libraries=geometry&v=3"></script>
-
+<script src="https://apis.google.com/js/api.js"></script>
 <script type="text/javascript">
 
 google.load('visualization', '1', {
@@ -639,60 +639,40 @@ function CenterControl(controlDiv, map) {
 
 controlUI.addEventListener('click', function() {
 
-alert('Here')
+alert('Here');
+gapi.load("client:auth2", function() {
+clientid = '13872833309-o9hbt87a1ecdhniq8hmtblpllv34bsib.apps.googleusercontent.com'
+gapi.auth2.init({client_id: clientid});
+authenticate().then(loadClient);
+execute();
+})
 
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyBE_i_0XxKsTQqjyM9JC9BdBL5t5iYsIr8",
-    authDomain: "ossmaps-162423.firebaseapp.com",
-    databaseURL: "https://ossmaps-162423.firebaseio.com",
-    projectId: "ossmaps-162423",
-    storageBucket: "",
-    messagingSenderId: "13872833309"
-  };
-  firebase.initializeApp(config);
-  var provider = new firebase.auth.GoogleAuthProvider();
-	alert('Here2')
-firebase.auth().signInWithPopup(provider).then(function(result) {
-  // This gives you a Google Access Token. You can use it to access the Google API.
-  var token = result.credential.accessToken;
-  // The signed-in user info.
-  var user = result.user;
-	console.log(user);
-	pP12 = '370212450357';
-	queryp = "SELECT Parcel12  FROM " + FT_TableID + " WHERE Parcel12 = '"+ pP12 +"'";
-	query = 'https://www.googleapis.com/fusiontables/v2/query'
+  function authenticate() {
+    return gapi.auth2.getAuthInstance()
+        .signIn({scope: "https://www.googleapis.com/auth/fusiontables https://www.googleapis.com/auth/fusiontables.readonly"})
+        .then(function() { console.log("Sign-in successful"); },
+              function(err) { console.error("Error signing in", err); });
+  }
+  function loadClient() {
+    return gapi.client.load("https://content.googleapis.com/discovery/v1/apis/fusiontables/v2/rest")
+        .then(function() { console.log("GAPI client loaded for API"); },
+              function(err) { console.error("Error loading GAPI client for API", err); });
+  }
+  // Make sure the client is loaded and sign-in is complete before calling this method.
+  function execute() {
+    return gapi.client.fusiontables.query.sql({
+      "sql": "Insert Into 1LU88bmDYYYzRUHzLTAKK4jjLJo8SLvJKPy55yA-q (siteid) VALUES (11)"
+    })
+        .then(function(response) {
+                // Handle the results here (response.result has the parsed body).
+                console.log("Response", response);
+              },
+              function(err) { console.error("Execute error", err); });
+  }
 
-        $.post(query,
-        {
-		sql: queryp
-
-        },
-        function(data,status){
-            alert("Data: " + data + "\nStatus: " + status);
-        });
-
+  });
+}	
 	
-	
-	
-	
-  // ...
-}).catch(function(error) {
-  // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
-  // The email of the user's account used.
-  var email = error.email;
-  // The firebase.auth.AuthCredential type that was used.
-  var credential = error.credential;
-  // ...
-});
-          
-
-
-});
-};
-
 function RightControl(controlDiv, map) {
 // Set CSS for the control border.
 var controlUIr = document.createElement('div');

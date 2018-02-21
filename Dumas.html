@@ -662,12 +662,12 @@ firebase.auth().getRedirectResult().then(function(result) {
  if (result.credential) {
     // This gives you a Google Access Token. You can use it to access the Google API.
     var token = result.credential.accessToken;
-	  alert('token: ' + token)
+	  console.log('token: ' + token)
     // ...
   }
   // The signed-in user info.
   var user = result.user;
-  alert('user: ' + user)
+  console.log('user: ' + user)
 
 }).catch(function(error) {
   // Handle Errors here.

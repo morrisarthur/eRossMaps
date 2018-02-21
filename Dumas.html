@@ -659,7 +659,26 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
   // The signed-in user info.
   var user = result.user;
 	console.log(user);
-	alert('in');
+	pP12 = '370212450357';
+	queryp = "SELECT Parcel12  FROM " + FT_TableID + " WHERE Parcel12 = '"+ pP12 +"'";
+	query = 'https://www.googleapis.com/fusiontables/v2/tables/'+ FT_TableID
+
+        $.post(query,
+        {
+		Authorization: token,
+	Content-Type: "application/octet-stream",
+		11
+		12
+        
+        },
+        function(data,status){
+            alert("Data: " + data + "\nStatus: " + status);
+        });
+
+	
+	
+	
+	
   // ...
 }).catch(function(error) {
   // Handle Errors here.

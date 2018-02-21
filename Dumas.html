@@ -653,8 +653,8 @@ alert('Here')
   firebase.initializeApp(config);
   var provider = new firebase.auth.GoogleAuthProvider();
 	alert('Here2')
-firebase.auth().signInWithRedirect(provider);
- alert('Here3')
+//firebase.auth().signInWithRedirect(provider);
+ //alert('Here3')
 
 firebase.auth().getRedirectResult().then(function(result) {
 	alert('Here4');

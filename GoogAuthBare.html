@@ -35,6 +35,7 @@
 var  clientid = '13872833309-o9hbt87a1ecdhniq8hmtblpllv34bsib.apps.googleusercontent.com'
     gapi.auth2.init({client_id: clientid});
   });
+  authenticate().then(loadClient)
 </script>
 <button onclick="authenticate().then(loadClient)">authorize and load</button>
 <button onclick="execute()">execute</button>

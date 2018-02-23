@@ -31,9 +31,18 @@
               },
               function(err) { console.error("Execute error", err); });
   }
-  gapi.load("client:auth2", function() {
-var  clientid = '13872833309-o9hbt87a1ecdhniq8hmtblpllv34bsib.apps.googleusercontent.com'
-    gapi.auth2.init({client_id: clientid});
+  gapi.load("client:auth2", {
+    callback: function() {
+      var  clientid = '13872833309-o9hbt87a1ecdhniq8hmtblpllv34bsib.apps.googleusercontent.com'
+      gapi.auth2.init({client_id: clientid});
+    },
+    onerror: function() {
+      alert('gapi.client failed');
+    },
+    timeout: 3000,
+    ontimeout: function() {
+      alert('gapi.client timed out');
+    }
      authenticate().then(loadClient)
   });
 
